@@ -1,6 +1,10 @@
-﻿using DatingApp.Api.Data;
+﻿using System.Net;
+using DatingApp.Api.Data;
+using DatingApp.Api.Helpers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +45,18 @@ namespace DatingApp.Api
             }
             else
             {
+                app.UseExceptionHandler(builder => {
+                    builder.Run(async ctx => {
+                        ctx.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+
+                        var error = ctx.Features.Get<IExceptionHandlerFeature>();
+                        if (error != null)
+                        {
+                            ctx.Response.AddAppError(error.Error.Message);
+                            await ctx.Response.WriteAsync(error.Error.Message);
+                        }
+                    });
+                });
                 //app.UseHsts();
             }
 
