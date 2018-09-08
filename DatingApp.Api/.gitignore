@@ -339,4 +339,4 @@ ASALocalRun/
 !.vscode/extensions.json
 
 # Custom
-DatingApp.Api/DatingApp.db
+DatingApp.db
