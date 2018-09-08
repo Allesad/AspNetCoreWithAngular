@@ -36,7 +36,7 @@ namespace DatingApp.Api.Controllers
 
             var userToCreate = new User
             {
-                Name = dto.Username
+                Username = dto.Username
             };
 
             var createdUser = await _repo.RegisterAsync(userToCreate, dto.Password);
@@ -54,7 +54,7 @@ namespace DatingApp.Api.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name)
+                new Claim(ClaimTypes.Name, user.Username)
             };
 
             var key = new SymmetricSecurityKey(

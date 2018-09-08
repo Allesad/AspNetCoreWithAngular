@@ -34,6 +34,8 @@ namespace DatingApp.Api
 
             // Authentication
             services.AddJwtAuthentication(Configuration);
+
+            services.AddTransient<Seed>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +61,8 @@ namespace DatingApp.Api
                 });
                 //app.UseHsts();
             }
+
+            //app.ApplicationServices.GetService<Seed>().SeedUsers();
 
             //app.UseHttpsRedirection();
             app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

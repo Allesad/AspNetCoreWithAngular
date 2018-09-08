@@ -63,11 +63,11 @@ namespace DatingApp.Api.Migrations
 
                     b.Property<string>("LookingFor");
 
-                    b.Property<string>("Name");
-
                     b.Property<byte[]>("PasswordHash");
 
                     b.Property<byte[]>("Salt");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
