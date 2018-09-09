@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using AutoMapper;
 using DatingApp.Api.Data;
 using DatingApp.Api.Helpers;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace DatingApp.Api
 {
@@ -35,6 +37,7 @@ namespace DatingApp.Api
                 });
             services.AddCors();
             services.AddAutoMapper();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
@@ -69,6 +72,8 @@ namespace DatingApp.Api
                 //app.UseHsts();
             }
 
+            var o = app.ApplicationServices.GetService<IOptions<CloudinarySettings>>().Value;
+            Console.WriteLine("Secret key: " + o.ApiSecret);
             //app.ApplicationServices.GetService<Seed>().SeedUsers();
 
             //app.UseHttpsRedirection();
